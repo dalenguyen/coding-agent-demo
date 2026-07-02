@@ -1,0 +1,4 @@
+ollama
+pytest
+python-dotenv
+openai
