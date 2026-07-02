@@ -1,0 +1,3 @@
+[submodule "demo_repo"]
+	path = demo_repo
+	url = https://github.com/dalenguyen/demo_repo.git
