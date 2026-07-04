@@ -5,6 +5,7 @@
 //   GET  /              -> service info JSON
 //   GET  /healthz       -> { status: "ok" }
 //   GET  /hello/:name   -> { message: "Hello, <name>!" }
+//   GET  /reverse/:text -> { reversed: "<text reversed>" }
 //   POST /echo          -> echoes back { received: <body>, at: <iso timestamp> }
 
 const express = require('express');
@@ -17,7 +18,7 @@ function createApp() {
     res.json({
       name: 'coding-agent-demo',
       description: 'Demo target repo for codemagpieai (create -> review).',
-      endpoints: ['/', '/healthz', '/hello/:name', '/echo'],
+      endpoints: ['/', '/healthz', '/hello/:name', '/reverse/:text', '/echo'],
     });
   });
 
@@ -31,6 +32,15 @@ function createApp() {
       return res.status(400).json({ error: 'name is required' });
     }
     res.json({ message: `Hello, ${name}!` });
+  });
+
+  app.get('/reverse/:text', (req, res) => {
+    const text = String(req.params.text || '').trim();
+    if (!text) {
+      return res.status(400).json({ error: 'text is required' });
+    }
+    const reversed = text.split('').reverse().join('');
+    res.json({ reversed });
   });
 
   app.post('/echo', (req, res) => {

@@ -107,6 +107,40 @@ test('GET /hello/:name rejects empty name', async () => {
   }
 });
 
+test('GET /reverse/:text reverses the string', async () => {
+  const { srv, port } = await listen(createApp());
+  try {
+    const r = await get(port, '/reverse/hello');
+    assert.equal(r.status, 200);
+    assert.deepEqual(JSON.parse(r.body), { reversed: 'olleh' });
+  } finally {
+    srv.close();
+  }
+});
+
+test('GET /reverse/:text trims whitespace before reversing', async () => {
+  const { srv, port } = await listen(createApp());
+  try {
+    const r = await get(port, '/reverse/%20%20abc%20%20');
+    assert.equal(r.status, 200);
+    assert.deepEqual(JSON.parse(r.body), { reversed: 'cba' });
+  } finally {
+    srv.close();
+  }
+});
+
+test('GET /reverse/:text rejects empty text', async () => {
+  const { srv, port } = await listen(createApp());
+  try {
+    // Mirrors /hello/:name: a URL-encoded space decodes to " " which trims to "" -> 400
+    const r = await get(port, '/reverse/%20');
+    assert.equal(r.status, 400);
+    assert.deepEqual(JSON.parse(r.body), { error: 'text is required' });
+  } finally {
+    srv.close();
+  }
+});
+
 test('POST /echo returns the body and a timestamp', async () => {
   const { srv, port } = await listen(createApp());
   try {
