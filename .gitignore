@@ -1,4 +1,7 @@
+node_modules/
+npm-debug.log*
+*.log
 .env
-.venv/
-__pycache__/
-.pytest_cache/
+.DS_Store
+coverage/
+.nyc_output/

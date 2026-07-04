@@ -1,0 +1,17 @@
+{
+  "name": "coding-agent-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Demo target repository for the codemagpieai GitHub App: from issue to PR to review.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test src/server.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
